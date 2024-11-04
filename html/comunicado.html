@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envio de Comunicado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .announcement-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-right: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1em;
+            color: #555;
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .history-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        .history-item .date {
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="announcement-container">
+    <h2>Envio de Comunicado</h2>
+    <form id="announcement-form">
+        <label for="title">Título do Comunicado:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="message">Mensagem:</label>
+        <textarea id="message" name="message" rows="6" required></textarea>
+
+        <label for="nivel">Selecione :</label>
+        <select id="nivel" name="nivel" required>
+            <option value="">Selecione...</option>
+            <option value="Aluno">Aluno</option>
+            <option value="Turma">Turma</option>
+            <option value="Todos">Todos</option>
+           
+        </select>
+        <button type="button" onclick="sendAnnouncement()">Enviar Comunicado</button>
+    </form>
+</div>
+
+<div class="history-container">
+    <h2>Histórico de Comunicados</h2>
+    <div id="history-list"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+    // Inicialize o EmailJS com seu User ID
+    (function(){
+        emailjs.init("SEU_USER_ID_AQUI");
+    })();
+
+    function sendAnnouncement() {
+        const title = document.getElementById("title").value;
+        const message = document.getElementById("message").value;
+
+        // Verifique se os campos estão preenchidos
+        if (title && message) {
+            // Parâmetros do e-mail
+            const templateParams = {
+                title: title,
+                message: message
+            };
+
+            emailjs.send("SEU_SERVICO_ID", "SEU_TEMPLATE_ID", templateParams)
+                .then((response) => {
+                    alert("Comunicado enviado com sucesso!");
+                    addToHistory(title, message); // Adiciona ao histórico
+                    document.getElementById("announcement-form").reset();
+                }, (error) => {
+                    alert("Erro ao enviar comunicado: " + error.text);
+                });
+        } else {
+            alert("Por favor, preencha todos os campos.");
+        }
+    }
+
+    function addToHistory(title, message) {
+        const historyList = document.getElementById("history-list");
+        const date = new Date();
+        const formattedDate = date.toLocaleString('pt-BR', { timeZone: 'UTC' }); // Formato da data e hora
+
+        const historyItem = document.createElement("div");
+        historyItem.classList.add("history-item");
+        historyItem.innerHTML = `<strong>${title}</strong><div>${message}</div><div class="date">${formattedDate}</div>`;
+        historyList.appendChild(historyItem);
+    }
+</script>
+
+
+</body>
+</html>

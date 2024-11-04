@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Semanal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .menu-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .day-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+        }
+        .day-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .add-dish {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .add-dish input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .add-dish button {
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .add-dish button:hover {
+            background-color: #45a049;
+        }
+        .dish-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            margin-top: 10px;
+        }
+        .dish-list li {
+            background-color: #e7f3e7;
+            padding: 6px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="menu-container">
+    <h2>Cardápio Semanal</h2>
+    <div id="days"></div>
+</div>
+
+<script>
+    const daysOfWeek = [
+        { name: 'Segunda-feira', dishes: [] },
+        { name: 'Terça-feira', dishes: [] },
+        { name: 'Quarta-feira', dishes: [] },
+        { name: 'Quinta-feira', dishes: [] },
+        { name: 'Sexta-feira', dishes: [] },
+        { name: 'Sábado', dishes: [] },
+        { name: 'Domingo', dishes: [] }
+    ];
+
+    function renderMenu() {
+        const daysContainer = document.getElementById('days');
+        daysContainer.innerHTML = '';
+
+        daysOfWeek.forEach((day, index) => {
+            const dayCard = document.createElement('div');
+            dayCard.className = 'day-card';
+
+            const dayTitle = document.createElement('div');
+            dayTitle.className = 'day-title';
+            dayTitle.textContent = day.name;
+            dayCard.appendChild(dayTitle);
+
+            const dishList = document.createElement('ul');
+            dishList.className = 'dish-list';
+
+            day.dishes.forEach(dish => {
+                const dishItem = document.createElement('li');
+                dishItem.textContent = dish;
+                dishList.appendChild(dishItem);
+            });
+
+            dayCard.appendChild(dishList);
+
+            const addDishForm = document.createElement('div');
+            addDishForm.className = 'add-dish';
+
+            const dishInput = document.createElement('input');
+            dishInput.type = 'text';
+            dishInput.placeholder = 'Adicionar prato';
+            addDishForm.appendChild(dishInput);
+
+            const addButton = document.createElement('button');
+            addButton.textContent = 'Adicionar';
+            addButton.onclick = () => addDish(index, dishInput.value);
+            addDishForm.appendChild(addButton);
+
+            dayCard.appendChild(addDishForm);
+
+            daysContainer.appendChild(dayCard);
+        });
+    }
+
+    function addDish(dayIndex, dishName) {
+        if (dishName.trim() !== '') {
+            daysOfWeek[dayIndex].dishes.push(dishName);
+            renderMenu();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderMenu);
+</script>
+
+</body>
+</html>

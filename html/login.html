@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://i1.wp.com/comlaser.net/wp-content/uploads/2018/03/cropped-road-3133502_1920.jpg'); /* Use a mesma imagem de fundo */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.6); /* Fundo branco com transparência */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button, .voltar-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #ADD8E6; /* azul bebê */
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+            text-decoration: none; /* Remover sublinhado do link */
+            font-size: 1rem;
+        }
+        button:hover, .voltar-btn:hover {
+            background-color: #87CEEB; /* azul hover */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+
+        <button type="submit">Entrar</button>
+        <a href="index.html" class="voltar-btn">Voltar</a> <!-- Botão de voltar -->
+    </form>
+</div>
+
+</body>
+</html>
